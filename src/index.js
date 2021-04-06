@@ -5,6 +5,7 @@ const config = require("../config.json");
 const ytdl = require('ytdl-core');
 
 let playlist = [];
+let volume = 0.5;
 
 client.on("ready", () => {
     console.log("Ready!");
@@ -20,8 +21,7 @@ client.on("message", async message => {
 
     function Music(command){
         message.member.voice.channel.join().then( connection => {
-            const dispatcher = connection.play(ytdl(playlist[0]), {volume: 0.5});
-            console.log("playing", playlist[0])
+            const dispatcher = connection.play(ytdl(playlist[0]), { volume });
 
             dispatcher.on("finish", () => {
                 playlist.shift();
@@ -48,16 +48,27 @@ client.on("message", async message => {
 
         Music();
     }
+
     if(command == "stop"){
         if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
         Music("stop");
         message.channel.send("A festa acabou que pena");
         playlist = [];
     }
+
     if(command == "skip"){
         if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
         Music("skip");
         message.channel.send("A música foi pulada!");
+    }
+
+    if(command == "volume") {
+        if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
+        if(!args[0]) return message.reply("Escolha um número de 1-10");
+
+        volume = args[0] / 20;
+
+        message.channel.send(`Volume alterado para ${volume * 100 / 0.5}%`);
     }
 })
 
