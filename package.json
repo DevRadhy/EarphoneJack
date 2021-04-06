@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js"
+    "start": "node src/index.js"
   },
   "dependencies": {
     "@discordjs/opus": "^0.5.0",
