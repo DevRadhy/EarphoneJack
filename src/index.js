@@ -27,7 +27,7 @@ client.on("message", async message => {
       playlist.push(args[0]);
 
       if(playlist.length <= 1) {
-        Music.play();
+        await Music.play();
       }
   }
 

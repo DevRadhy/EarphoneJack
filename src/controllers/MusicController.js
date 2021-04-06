@@ -16,19 +16,10 @@ class Music {
     return connection;
   }
 
-  play() {
-    const connection = this.getConnection();
+  async play() {
+    const connection = await this.getConnection();
 
     const dispatcher = connection.play(ytdl(playlist[0]), { volume, quality: 'highestaudio' });
-
-    dispatcher.on('start', async () => {
-      const info = await ytdl.getInfo(playlist[0]);
-
-      return {
-        title: info.videoDetails.title,
-        author: info.videoDetails.author.name,
-      }
-    });
   
     dispatcher.on('finish', () => {
         playlist.shift();
