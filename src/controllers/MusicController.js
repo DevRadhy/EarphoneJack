@@ -1,9 +1,10 @@
 const ytdl = require('ytdl-core');
 
+let playlist = [];
+let volume = 0.5;
+
 class Music {
   message;
-  volume = 0.5;
-  playlist = [];
 
   constructor(message) {
     this.message = message;
@@ -11,15 +12,15 @@ class Music {
 
   async main(command) {
     const connection = await this.message.member.voice.channel.join();
-    const dispatcher = connection.play(ytdl(this.playlist[0]), { volume: this.volume });
+    const dispatcher = connection.play(ytdl(this.playlist[0]), { volume });
   
     dispatcher.on("finish", () => {
-        this.playlist.shift();
-        this.playlist.length >= 1 ? this.play() : this.message.member.voice.channel.leave();
+        playlist.shift();
+        playlist.length >= 1 ? this.play() : this.message.member.voice.channel.leave();
     });
   
     if(command === "volume") {
-      dispatcher.setVolume(this.volume);
+      dispatcher.setVolume(volume);
     }
   
     if(command === "stop"){
@@ -33,18 +34,22 @@ class Music {
   }
 
   skip() {
-    this.playlist.shift();
+    playlist.shift();
     this.play();
   }
 
   stop() {
     this.main("stop");
-    this.playlist = [];
+    playlist = [];
   }
 
-  setVolume(volume) {
-    this.main(volume);
+  setVolume(newVolume) {
+    volume = newVolume;
+    this.main("volume");
   }
 }
 
-module.exports = Music;
+module.exports = {
+  MusicController: Music,
+  playlist,
+};
