@@ -6,9 +6,6 @@ const MusicController = require('./controllers/MusicController');
 
 const ytdl = require('ytdl-core');
 
-let playlist = [];
-let volume = 0.5;
-
 client.on("ready", () => {
   console.log("Ready!");
 })
@@ -26,7 +23,7 @@ client.on("message", async message => {
   if(command === "play"){
       if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
       if(!ytdl.validateURL(args[0])) return message.reply("Desculpe, você precisa por um link válido");
-      playlist.push(args[0]);
+      Music.playlist.push(args[0]);
       console.log("new music added!");
 
       Music.play();
