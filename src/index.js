@@ -26,9 +26,9 @@ client.on("message", async message => {
       
       playlist.push(args[0]);
 
-      const playinfo = await Music.play();
-
-      message.channel.send(`playing ${playinfo.title} - ${playinfo.author}`)
+      if(playlist.length <= 1) {
+        Music.play();
+      }
   }
 
   if(command === "stop"){
