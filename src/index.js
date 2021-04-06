@@ -2,6 +2,8 @@
 const client = new Client();
 const config = require("../config.json");
 
+const MusicController = require('./controllers/MusicController');
+
 const ytdl = require('ytdl-core');
 
 let playlist = [];
@@ -19,29 +21,7 @@ client.on("message", async message => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLocaleLowerCase();
 
-  async function Music(command){
-    const connection = await message.member.voice.channel.join();
-    const dispatcher = connection.play(ytdl(playlist[0]), { volume });
-  
-    dispatcher.on("finish", () => {
-        playlist.shift();
-        playlist.length >= 1 ? Music() : message.member.voice.channel.leave();
-    });
-  
-    if(command === "volume") {
-      dispatcher.setVolume(volume);
-    }
-  
-    if(command === "stop"){
-        dispatcher.destroy();
-        message.member.voice.channel.leave();
-    }
-    
-    if(command === "skip"){
-      playlist.shift();
-      console.log(playlist);
-    }
-  }
+  const Music = new MusicController(message);
 
   if(command === "play"){
       if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
@@ -49,19 +29,18 @@ client.on("message", async message => {
       playlist.push(args[0]);
       console.log("new music added!");
 
-      Music();
+      Music.play();
   }
 
   if(command === "stop"){
       if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
-      Music("stop");
+      Music.stop();
       message.channel.send("A festa acabou que pena");
-      playlist = [];
   }
 
   if(command === "skip"){
       if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
-      Music("skip");
+      Music.skip();
       message.channel.send("A música foi pulada!");
   }
 
@@ -69,8 +48,8 @@ client.on("message", async message => {
       if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
       if(!args[0]) return message.reply("Escolha um número de 1-10");
 
-      volume = args[0] / 20;
-      Music("volume");
+      const volume = args[0] / 20;
+      Music.setVolume(volume);
 
       message.channel.send(`Volume alterado para ${volume * 100 / 0.5}%`);
   }
