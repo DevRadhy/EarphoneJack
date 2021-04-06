@@ -49,7 +49,7 @@ client.on("message", async message => {
       playlist.push(args[0]);
       console.log("new music added!");
 
-      if(playlist < 1) {
+      if(playlist <= 1) {
         Music();
       }
   }
