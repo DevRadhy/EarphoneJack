@@ -10,48 +10,46 @@ class Music {
     this.message = message;
   }
 
-  async main(command) {
+  async getConnection() {
     const connection = await this.message.member.voice.channel.join();
+
+    return connection;
+  }
+
+  play() {
+    const connection = this.getConnection();
+
     const dispatcher = connection.play(ytdl(playlist[0]), { volume, quality: 'highestaudio' });
+
+    dispatcher.on('start', () => {
+      const info = await ytdl.getInfo(playlist[0])
+
+      return {
+        title: info.videoDetails.title,
+        author: info.videoDetails.author.name,
+      }
+    });
   
-    dispatcher.on("finish", () => {
+    dispatcher.on('finish', () => {
         playlist.shift();
         playlist.length >= 1 ? this.play() : this.message.member.voice.channel.leave();
     });
-  
-    if(command === "volume") {
-      dispatcher.setVolume(volume);
-    }
-  
-    if(command === "stop"){
-        dispatcher.destroy();
-        this.message.member.voice.channel.leave();
-    }
-  }
-
-  async play() {
-    await this.main();
-    const info = await ytdl.getInfo(playlist[0])
-
-    return {
-      title: info.videoDetails.title,
-      author: info.videoDetails.author,
-    }
   }
 
   skip() {
-    playlist.shift();
-    this.play();
+    const connection = this.getConnection();
+    connection.dispatcher.end();
   }
 
   stop() {
-    this.main("stop");
+    const connection = this.getConnection();
+
     playlist = [];
+    connection.dispatcher.end();
   }
 
   setVolume(newVolume) {
     volume = newVolume;
-    this.main("volume");
   }
 }
 
