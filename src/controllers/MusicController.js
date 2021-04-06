@@ -21,7 +21,7 @@ class Music {
 
     const dispatcher = connection.play(ytdl(playlist[0]), { volume, quality: 'highestaudio' });
 
-    dispatcher.on('start', () => {
+    dispatcher.on('start', async () => {
       const info = await ytdl.getInfo(playlist[0])
 
       return {

@@ -33,13 +33,13 @@ client.on("message", async message => {
 
   if(command === "stop"){
       if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
-      Music.stop();
+      await Music.stop();
       message.channel.send("A festa acabou que pena");
   }
 
   if(command === "skip"){
       if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
-      Music.skip();
+      await Music.skip();
       message.channel.send("A música foi pulada!");
   }
 
@@ -48,7 +48,7 @@ client.on("message", async message => {
       if(!args[0]) return message.reply("Escolha um número de 1-10");
 
       const volume = args[0] / 20;
-      Music.setVolume(volume);
+      await Music.setVolume(volume);
 
       message.channel.send(`Volume alterado para ${volume * 100 / 0.5}%`);
   }
