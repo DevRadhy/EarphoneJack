@@ -16,8 +16,8 @@ class Music {
     return connection;
   }
 
-  play() {
-    const connection = this.getConnection();
+  async play() {
+    const connection = await this.getConnection();
 
     const dispatcher = connection.play(ytdl(playlist[0]), { volume, quality: 'highestaudio' });
 
@@ -36,19 +36,19 @@ class Music {
     });
   }
 
-  skip() {
-    const connection = this.getConnection();
+  async skip() {
+    const connection = await this.getConnection();
     connection.dispatcher.end();
   }
 
-  stop() {
-    const connection = this.getConnection();
+  async stop() {
+    const connection = await this.getConnection();
 
     playlist = [];
     connection.dispatcher.end();
   }
 
-  setVolume(newVolume) {
+  async setVolume(newVolume) {
     volume = newVolume;
   }
 }
