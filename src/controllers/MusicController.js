@@ -12,7 +12,7 @@ class Music {
 
   async main(command) {
     const connection = await this.message.member.voice.channel.join();
-    const dispatcher = connection.play(ytdl(playlist[0]), { volume });
+    const dispatcher = connection.play(ytdl(playlist[0]), { volume, quality: 'highestaudio' });
   
     dispatcher.on("finish", () => {
         playlist.shift();
@@ -29,8 +29,14 @@ class Music {
     }
   }
 
-  play() {
-    this.main();
+  async play() {
+    await this.main();
+    const info = await ytdl.getInfo(playlist[0])
+
+    return {
+      title: info.videoDetails.title,
+      author: info.videoDetails.author,
+    }
   }
 
   skip() {

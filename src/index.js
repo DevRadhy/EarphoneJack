@@ -23,10 +23,12 @@ client.on("message", async message => {
   if(command === "play"){
       if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
       if(!ytdl.validateURL(args[0])) return message.reply("Desculpe, você precisa por um link válido");
+      
       playlist.push(args[0]);
-      console.log("new music added!");
 
-      Music.play();
+      const playinfo = await Music.play();
+
+      message.channel.send(`playing ${playinfo.title} - ${playinfo.author}`)
   }
 
   if(command === "stop"){
