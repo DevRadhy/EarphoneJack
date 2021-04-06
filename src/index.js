@@ -49,9 +49,7 @@ client.on("message", async message => {
       playlist.push(args[0]);
       console.log("new music added!");
 
-      if(playlist.length <= 1) {
-        Music();
-      }
+      Music();
   }
 
   if(command === "stop"){
