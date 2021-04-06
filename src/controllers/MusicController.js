@@ -1,3 +1,5 @@
+const ytdl = require('ytdl-core');
+
 class Music {
   message;
   volume = 0.5;
