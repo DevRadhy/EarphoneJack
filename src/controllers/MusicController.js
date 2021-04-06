@@ -9,7 +9,7 @@ class Music {
 
   async main(command) {
     const connection = await this.message.member.voice.channel.join();
-    const dispatcher = !comamnd && connection.play(ytdl(this.playlist[0]), { volume });
+    const dispatcher = !command && connection.play(ytdl(this.playlist[0]), { volume });
   
     dispatcher.on("finish", () => {
         this.playlist.shift();
