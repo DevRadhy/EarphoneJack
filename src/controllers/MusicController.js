@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const ytdl = require('ytdl-core');
 
 let playlist = [];
@@ -20,10 +21,19 @@ class Music {
     const connection = await this.getConnection();
 
     const dispatcher = connection.play(ytdl(playlist[0]), { volume, quality: 'highestaudio' });
+
+    const songInfo = await ytdl.getInfo(playlist[0])
+
+    const embed = new MessageEmbed()
+
+    embed.setColor('#ffd596')
+    embed.setTitle(`Tocando agora ${songInfo.videoDetails.title}`)
+
+    this.message.channel.send(embed);
   
     dispatcher.on('finish', () => {
         playlist.shift();
-        playlist.length >= 1 ? this.play() : this.stop();
+        playlist.length >= 1 ? this.play() : this.message.member.voice.channel.leave();
     });
   }
 

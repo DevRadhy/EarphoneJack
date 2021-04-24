@@ -5,6 +5,7 @@ async function seachVideos(query) {
     params: {
       part: 'snippet',
       type: 'video',
+      maxResult: 10,
       q: query,
       key: process.env.YOUTUBE_KEY,
     }
