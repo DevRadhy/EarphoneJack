@@ -7,8 +7,6 @@ module.exports = async (client, message, args, music) => {
 
   embed.setColor('#ffd596')
   embed.setTitle('Música pulada!')
-  embed.setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL())
-  embed.setTimestamp()
 
-  return message.channel.send("A música foi pulada!");
+  return message.channel.send(embed);
 }

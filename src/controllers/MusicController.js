@@ -33,7 +33,7 @@ class Music {
   
     dispatcher.on('finish', () => {
         playlist.shift();
-        playlist.length >= 1 ? this.play() : this.message.member.voice.channel.leave();
+        playlist.length >= 1 ? this.play() : this.stop();
     });
   }
 
@@ -43,10 +43,15 @@ class Music {
   }
 
   async stop() {
-    const connection = await this.getConnection();
-
     playlist = [];
-    connection.dispatcher.end();
+    this.message.member.voice.channel.leave();
+
+    const embed = new MessageEmbed()
+
+    embed.setColor('#ffd596')
+    embed.setTitle('Que pena, a festa acabou.')
+
+    return this.message.channel.send(embed);
   }
 }
 
