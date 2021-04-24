@@ -23,7 +23,7 @@ class Music {
   
     dispatcher.on('finish', () => {
         playlist.shift();
-        playlist.length >= 1 ? this.play() : this.message.member.voice.channel.leave();
+        playlist.length >= 1 ? this.play() : this.stop();
     });
   }
 
@@ -37,10 +37,6 @@ class Music {
 
     playlist = [];
     connection.dispatcher.end();
-  }
-
-  async setVolume(newVolume) {
-    volume = newVolume;
   }
 }
 
