@@ -1,7 +1,14 @@
 # node_modules
 node_modules/
 
+# packages
+package-lock.json
+yarn.lock
+
 # environments variables
 .env
 .evn.local
 .env.development
+
+# host
+Procfile
