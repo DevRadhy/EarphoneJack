@@ -13,18 +13,18 @@ module.exports = async (client, message, args, music) => {
 
     const videos = await seachVideos(argsQuery);
 
-    const embed = new MessageEmbed()
+    const embed = new MessageEmbed();
 
-    embed.setColor('#ffd596')
-    embed.setTitle('Escolha uma música.')
-    embed.setDescription('Escolha um número de 1-10')
+    embed.setColor('#ffd596');
+    embed.setTitle('Escolha uma música.');
+    embed.setDescription('Escolha um número de 1-10');
 
     videos.map((song, index) => {
       embed.addField(`${index + 1}. ${song.title}`, song.title);
     });
 
-    embed.setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL())
-    embed.setTimestamp()
+    embed.setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL());
+    embed.setTimestamp();
 
     message.channel.send(embed);
 
@@ -40,17 +40,17 @@ module.exports = async (client, message, args, music) => {
 
       playlist.push(url);
 
-      const embed = new MessageEmbed()
+      const embed = new MessageEmbed();
 
-      embed.setColor('#ffd596')
-      embed.setTitle(`${videos[songIndex].title} Adicionada a playlist!`)
+      embed.setColor('#ffd596');
+      embed.setTitle(`${videos[songIndex].title} Adicionada a playlist!`);
 
       message.channel.send(embed);
 
       if(playlist.length <= 1) {
         return music.play();
       }
-    })
+    });
   }else {
     playlist.push(url);
   
@@ -58,4 +58,4 @@ module.exports = async (client, message, args, music) => {
       await music.play();
     }
   }
-}
+};

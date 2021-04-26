@@ -1,4 +1,4 @@
-const api = require("../services/api")
+const api = require("../services/api");
 
 async function seachVideos(query) {
   const { data } = await api.get('/search', {
@@ -21,4 +21,4 @@ async function seachVideos(query) {
 
 module.exports = {
   seachVideos,
-}
+};
