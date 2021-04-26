@@ -28,7 +28,9 @@ module.exports = async (client, message, args, music) => {
 
     message.channel.send(embed);
 
-    const filter = m => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(Number(m.content));
+    const interector = [...Array(10).keys()];
+
+    const filter = m => interector.includes(Number(m.content - 1));
     const collector = message.channel.createMessageCollector(filter, { max: 1, time: 60000 });
 
     collector.on('collect', m => {
