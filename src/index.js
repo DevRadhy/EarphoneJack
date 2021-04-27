@@ -2,11 +2,8 @@
 
 const { Client } = require("discord.js");
 const client = new Client();
-const config = require("../config.json");
 const path = require("path");
 const fs = require("fs");
-
-const { MusicController } = require('./controllers/MusicController');
 
 client.commands = {};
 
@@ -18,16 +15,16 @@ fs.readdir(commandsPath, (err, file) => {
     const command = file.split('.')[0];
     client.commands[command] = module;
   });
-})
+});
 
 
 client.on("ready", () => {
   console.log("Ready!");
-})
+});
 
 client.on("message", async message => {
   const msg = require('./events/message');
   msg(client, message);
-})
+});
 
 client.login(process.env.SECRET_TOKEN);

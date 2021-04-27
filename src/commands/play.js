@@ -13,29 +13,51 @@ module.exports = async (client, message, args, music) => {
 
     const videos = await seachVideos(argsQuery);
 
-    const embed = new MessageEmbed()
+    const embed = new MessageEmbed();
 
-    embed.setColor('#ffd596')
-    embed.setTitle('Escolha uma música.')
-    embed.setDescription('Escolha um número de 1-10')
+    embed.setColor('#ffd596');
+    embed.setTitle('Escolha uma música.');
+    embed.setDescription('Escolha um número de 1-10');
 
     videos.map((song, index) => {
       embed.addField(`${index + 1}. ${song.title}`, song.title);
     });
 
-    embed.setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL())
-    embed.setTimestamp()
+    embed.setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL());
+    embed.setTimestamp();
 
     message.channel.send(embed);
-    
-    ytdl.validateID(videos[0].video_id);
 
-    url = `https://youtube.com/watch?v=${videos[0].video_id}`;
-  }
+    const interector = [...Array(10).keys()];
+
+    const filter = m => interector.includes(Number(m.content - 1));
+    const collector = message.channel.createMessageCollector(filter, { max: 1, time: 60000 });
+
+    collector.on('collect', m => {
+      const songIndex = m.content - 1;
+
+      ytdl.validateID(videos[songIndex].video_id);
   
-  playlist.push(url);
+      url = `https://youtube.com/watch?v=${videos[songIndex].video_id}`;
 
-  if(playlist.length <= 1) {
-    await music.play();
+      playlist.push(url);
+
+      const embed = new MessageEmbed();
+
+      embed.setColor('#ffd596');
+      embed.setTitle(`${videos[songIndex].title} Adicionada a playlist!`);
+
+      message.channel.send(embed);
+
+      if(playlist.length <= 1) {
+        return music.play();
+      }
+    });
+  }else {
+    playlist.push(url);
+  
+    if(playlist.length <= 1) {
+      await music.play();
+    }
   }
-}
+};

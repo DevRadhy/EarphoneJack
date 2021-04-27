@@ -9,6 +9,3 @@ yarn.lock
 .env
 .evn.local
 .env.development
-
-# host
-Procfile

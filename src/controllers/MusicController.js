@@ -5,8 +5,6 @@ let playlist = [];
 let volume = 0.5;
 
 class Music {
-  message;
-
   constructor(message) {
     this.message = message;
   }
@@ -22,18 +20,18 @@ class Music {
 
     const dispatcher = connection.play(ytdl(playlist[0]), { volume, quality: 'highestaudio' });
 
-    const songInfo = await ytdl.getInfo(playlist[0])
+    const songInfo = await ytdl.getInfo(playlist[0]);
 
-    const embed = new MessageEmbed()
+    const embed = new MessageEmbed();
 
-    embed.setColor('#ffd596')
-    embed.setTitle(`Tocando agora ${songInfo.videoDetails.title}`)
+    embed.setColor('#ffd596');
+    embed.setTitle(`Tocando agora ${songInfo.videoDetails.title}`);
 
     this.message.channel.send(embed);
   
     dispatcher.on('finish', () => {
-        playlist.shift();
-        playlist.length >= 1 ? this.play() : this.message.member.voice.channel.leave();
+      playlist.shift();
+      playlist.length >= 1 ? this.play() : this.stop();
     });
   }
 
@@ -43,10 +41,15 @@ class Music {
   }
 
   async stop() {
-    const connection = await this.getConnection();
-
     playlist = [];
-    connection.dispatcher.end();
+    this.message.member.voice.channel.leave();
+
+    const embed = new MessageEmbed();
+
+    embed.setColor('#ffd596');
+    embed.setTitle('Que pena, a festa acabou.');
+
+    return this.message.channel.send(embed);
   }
 }
 

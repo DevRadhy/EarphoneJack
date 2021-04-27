@@ -1,11 +1,11 @@
-const api = require("../services/api")
+const api = require("../services/api");
 
 async function seachVideos(query) {
   const { data } = await api.get('/search', {
     params: {
       part: 'snippet',
       type: 'video',
-      maxResult: 10,
+      maxResults: 10,
       q: query,
       key: process.env.YOUTUBE_KEY,
     }
@@ -21,4 +21,4 @@ async function seachVideos(query) {
 
 module.exports = {
   seachVideos,
-}
+};
