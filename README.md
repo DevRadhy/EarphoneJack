@@ -1,10 +1,10 @@
 <h1 align="center" >EarphoneJack</h1>
 
 <p align="center">
-  <a href="#introdução">Introdução</a> •
-  <a href="#tecnologias">Tecnologias</a> •
-  <a href="#configurando-projeto">Contribuindo</a> •
-  <a href="#configurando-projeto">Projeto</a>
+  <a href="#%EF%B8%8F-introdução">Introdução</a> •
+  <a href="#-tecnologias">Tecnologias</a> •
+  <a href="#-contribuindo">Contribuindo</a> •
+  <a href="#-configurando-projeto">Projeto</a>
 </p>
 
 <br />
@@ -51,7 +51,7 @@ Projeto feito usando biblioteca javascript para Discord.
 
 ## 🧑‍🚀 Contribuindo
 
-Antes de começar contribuir leia o [CODE_OF_CONDUCT](/CODE_OF_CONDUCT) e [CONTRIBUTNIG](/CONTRIBUTING), para saber como agir na comunidade e como contribuir da melhor forma, e que pode fazer suas alrerações serem adicionadas ao projeto.
+Antes de começar contribuir leia o [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md) e [CONTRIBUTNIG](./CONTRIBUTING.md), para saber como agir na comunidade e como contribuir da melhor forma, e que pode fazer suas alrerações serem adicionadas ao projeto.
 
 ## 🎉 Configurando Projeto
 
