@@ -1,8 +1,9 @@
-const { MessageEmbed } = require("discord.js");
-const ytdl = require('ytdl-core');
-const { playlist } = require("../controllers/MusicController");
+import { MessageEmbed } from "discord.js";
+import ytdl from 'ytdl-core';
+import { playlist } from "../controllers/MusicController";
+import { ICommandsProps } from "../DTO/CommandsDTO";
 
-module.exports = async (client, message) => {
+export = async ({ message }: ICommandsProps) => {
   const embed = new MessageEmbed();
 
   embed.setColor('#ffd596');
@@ -14,7 +15,7 @@ module.exports = async (client, message) => {
     embed.addField(`${i + 1}. ${songInfo.videoDetails.title}`, songInfo.videoDetails.author.name);
   }
 
-  embed.setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL());
+  embed.setFooter(`Requested by ${message.author.tag}`, String(message.author.avatarURL()));
   embed.setTimestamp();
 
   return message.channel.send(embed);

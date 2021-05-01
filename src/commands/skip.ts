@@ -1,6 +1,8 @@
+import { ICommandsProps } from "../DTO/CommandsDTO";
+
 const { MessageEmbed } = require("discord.js");
 
-module.exports = async (client, message, args, music) => {
+export = async ({ message, music }: ICommandsProps) => {
   await music.skip();
 
   const embed = new MessageEmbed();
