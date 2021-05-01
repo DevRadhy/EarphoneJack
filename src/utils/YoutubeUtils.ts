@@ -1,6 +1,15 @@
-const api = require("../services/api");
+import { api } from "../services/api";
 
-async function seachVideos(query) {
+interface ItemProps {
+  snippet: {
+    title: string;
+  };
+  id: {
+    videoId: string;
+  };
+}
+
+export async function seachVideos(query: string) {
   const { data } = await api.get('/search', {
     params: {
       part: 'snippet',
@@ -11,14 +20,10 @@ async function seachVideos(query) {
     }
   });
 
-  return data.items.map(item => (
+  return data.items.map((item: ItemProps) => (
     {
       title: item.snippet.title,
       video_id: item.id.videoId,
     }
   ));
 }
-
-module.exports = {
-  seachVideos,
-};
