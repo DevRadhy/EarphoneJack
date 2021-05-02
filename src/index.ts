@@ -2,12 +2,9 @@ import { Client } from "discord.js";
 const client = new Client();
 import path from "path";
 import fs from "fs";
+import { ICommands } from "./DTO/CommandsDTO";
 
-interface CommandsProps {
-  [command: string]: () => void;
-}
-
-const commands: CommandsProps = {};
+const commands: ICommands = {};
 
 const commandsPath = path.join(__dirname, 'commands');
 

@@ -20,3 +20,11 @@ export = async ({ message }: ICommandsProps) => {
 
   return message.channel.send(embed);
 };
+
+/**
+ * {
+ *  name: 'list',
+ *  description: 'Mostra as músicas na fila.',
+ *  alias: [ 'playlist', 'queue' ]
+ * }
+ */

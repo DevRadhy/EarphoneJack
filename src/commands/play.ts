@@ -62,3 +62,11 @@ export = async ({ message, args, music }: ICommandsProps) => {
     }
   }
 };
+
+/**
+ * {
+ *  name: 'play',
+ *  description: 'Coloque um link ou pesquise um música, escolha uma de 1 a 10 pra ser adicionada a playlist.',
+ *  alias: [ 'tocar' ]
+ * }
+ */

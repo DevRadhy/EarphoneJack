@@ -7,3 +7,8 @@ export interface ICommandsProps {
   args: string[];
   music: MusicController;
 }
+
+export interface ICommands {
+  // eslint-disable-next-line no-unused-vars
+  [command: string]: (props: ICommandsProps) => void;
+}

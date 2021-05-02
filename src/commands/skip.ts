@@ -12,3 +12,11 @@ export = async ({ message, music }: ICommandsProps) => {
 
   return message.channel.send(embed);
 };
+
+/**
+ * {
+ *  name: 'skip',
+ *  description: 'Pula para a proxima música',
+ *  alias: [ 'pular', 'proxima' ]
+ * }
+ */

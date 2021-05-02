@@ -1,9 +1,10 @@
 ﻿import { Client, Message } from "discord.js";
 import { MusicController } from "../controllers/MusicController";
+import { ICommands } from "../DTO/CommandsDTO";
 
 const config = require ('../../config.json');
 
-export = (client: Client, message: Message, commands: any) => {
+export = (client: Client, message: Message, commands: ICommands) => {
   // Iguinore todos os bots
   if (message.author.bot) return;
 
