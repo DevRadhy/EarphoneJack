@@ -1,16 +1,18 @@
-const { MessageEmbed } = require('discord.js');
-const ytdl = require('ytdl-core');
+import { Message, MessageEmbed } from 'discord.js';
+import ytdl from 'ytdl-core';
 
-let playlist = [];
+let playlist: string[] = [];
 let volume = 0.5;
 
-class Music {
-  constructor(message) {
+class MusicController {
+  private message: Message;
+
+  constructor(message: Message) {
     this.message = message;
   }
 
   async getConnection() {
-    const connection = await this.message.member.voice.channel.join();
+    const connection = await this.message.member?.voice.channel?.join();
 
     return connection;
   }
@@ -18,7 +20,7 @@ class Music {
   async play() {
     const connection = await this.getConnection();
 
-    const dispatcher = connection.play(ytdl(playlist[0]), { volume, quality: 'highestaudio' });
+    const dispatcher = connection?.play(ytdl(playlist[0], { quality: 'highestaudio' }), { volume });
 
     const songInfo = await ytdl.getInfo(playlist[0]);
 
@@ -29,7 +31,7 @@ class Music {
 
     this.message.channel.send(embed);
   
-    dispatcher.on('finish', () => {
+    dispatcher?.on('finish', () => {
       playlist.shift();
       playlist.length >= 1 ? this.play() : this.stop();
     });
@@ -37,12 +39,12 @@ class Music {
 
   async skip() {
     const connection = await this.getConnection();
-    connection.dispatcher.end();
+    connection?.dispatcher.end();
   }
 
   async stop() {
     playlist = [];
-    this.message.member.voice.channel.leave();
+    this.message.member?.voice.channel?.leave();
 
     const embed = new MessageEmbed();
 
@@ -51,9 +53,14 @@ class Music {
 
     return this.message.channel.send(embed);
   }
+
+  async setVolume(newVolume: number) {
+    const connection = await this.getConnection();
+
+    volume = newVolume;
+
+    connection?.dispatcher.setVolume(newVolume);
+  }
 }
 
-module.exports = {
-  MusicController: Music,
-  playlist,
-};
+export { MusicController, playlist };

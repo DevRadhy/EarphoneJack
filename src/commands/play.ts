@@ -1,15 +1,16 @@
-const { MessageEmbed } = require('discord.js');
-const ytdl = require('ytdl-core');
-const { playlist } = require('../controllers/MusicController');
-const { seachVideos } = require('../utils/YoutubeUtils');
+import { Message, MessageEmbed } from 'discord.js';
+import ytdl from 'ytdl-core';
+import { playlist } from '../controllers/MusicController';
+import { ICommandsProps } from '../DTO/CommandsDTO';
+import { seachVideos } from '../utils/YoutubeUtils';
 
-module.exports = async (client, message, args, music) => {
-  if(!message.member.voice.channel) return message.reply("Desculpe, você precisa estar em um canal de voz");
-  
+const config = require('../../config.json');
+
+export = async ({ message, args, music }: ICommandsProps) => {
   let url = args[0];
 
   if(!ytdl.validateURL(args[0])) {
-    const argsQuery = message.content.slice(9).trim();
+    const argsQuery = message.content.slice(config.prefix.length).trim();
 
     const videos = await seachVideos(argsQuery);
 
@@ -19,22 +20,22 @@ module.exports = async (client, message, args, music) => {
     embed.setTitle('Escolha uma música.');
     embed.setDescription('Escolha um número de 1-10');
 
-    videos.map((song, index) => {
+    videos.map((song: { title: string }, index: number) => {
       embed.addField(`${index + 1}. ${song.title}`, song.title);
     });
 
-    embed.setFooter(`Requested by ${message.author.tag}`, message.author.avatarURL());
+    embed.setFooter(`Requested by ${message.author.tag}`, String(message.author.avatarURL()));
     embed.setTimestamp();
 
     message.channel.send(embed);
 
     const interector = [...Array(10).keys()];
+    const filter = (reply: Message) => interector.includes(Number(reply.content) - 1);
 
-    const filter = m => interector.includes(Number(m.content - 1));
     const collector = message.channel.createMessageCollector(filter, { max: 1, time: 60000 });
 
-    collector.on('collect', m => {
-      const songIndex = m.content - 1;
+    collector.on('collect', async (reply: Message) => {
+      const songIndex = Number(reply.content) - 1;
 
       ytdl.validateID(videos[songIndex].video_id);
   
@@ -61,3 +62,11 @@ module.exports = async (client, message, args, music) => {
     }
   }
 };
+
+/**
+ * {
+ *  name: 'play',
+ *  description: 'Coloque um link ou pesquise um música, escolha uma de 1 a 10 pra ser adicionada a playlist.',
+ *  alias: [ 'tocar' ]
+ * }
+ */
