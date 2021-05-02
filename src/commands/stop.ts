@@ -1,13 +1,11 @@
 import { ICommandsProps } from '../DTO/CommandsDTO';
 
-export = async ({ music }: ICommandsProps) => {
+export const stop = async ({ music }: ICommandsProps) => {
   return music.stop();
 };
 
-/**
- * {
- *  name: 'stop',
- *  description: 'Para a músic e limpa a fila.',
- *  alias: [ 'parar' ]
- * }
- */
+export const details = {
+  name: 'stop',
+  description: 'Para a músic e limpa a fila.',
+  alias: [ 'parar' ],
+};

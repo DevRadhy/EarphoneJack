@@ -2,7 +2,7 @@ import { ICommandsProps } from "../DTO/CommandsDTO";
 
 const { MessageEmbed } = require("discord.js");
 
-export = async ({ message, music }: ICommandsProps) => {
+export const skip = async ({ message, music }: ICommandsProps) => {
   await music.skip();
 
   const embed = new MessageEmbed();
@@ -13,10 +13,8 @@ export = async ({ message, music }: ICommandsProps) => {
   return message.channel.send(embed);
 };
 
-/**
- * {
- *  name: 'skip',
- *  description: 'Pula para a proxima música',
- *  alias: [ 'pular', 'proxima' ]
- * }
- */
+export const details = {
+  name: 'skip',
+  description: 'Pula para a proxima música',
+  alias: [ 'pular', 'proxima' ],
+};

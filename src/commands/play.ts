@@ -6,7 +6,7 @@ import { seachVideos } from '../utils/YoutubeUtils';
 
 const config = require('../../config.json');
 
-export = async ({ message, args, music }: ICommandsProps) => {
+export const play = async ({ message, args, music }: ICommandsProps) => {
   let url = args[0];
 
   if(!ytdl.validateURL(args[0])) {
@@ -63,10 +63,8 @@ export = async ({ message, args, music }: ICommandsProps) => {
   }
 };
 
-/**
- * {
- *  name: 'play',
- *  description: 'Coloque um link ou pesquise um música, escolha uma de 1 a 10 pra ser adicionada a playlist.',
- *  alias: [ 'tocar' ]
- * }
- */
+export const details = {
+  name: 'play',
+  description: 'Coloque um link ou pesquise um música, escolha uma de 1 a 10 pra ser adicionada a playlist.',
+  alias: [ 'tocar' ],
+};
