@@ -59,7 +59,7 @@ class MusicController {
 
     volume = newVolume;
 
-    connection?.dispatcher.setVolume(newVolume);
+    connection?.dispatcher?.setVolume(newVolume);
   }
 }
 
