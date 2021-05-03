@@ -20,14 +20,15 @@ class MusicController {
   async play() {
     const connection = await this.getConnection();
 
-    const dispatcher = connection?.play(ytdl(playlist[0], { quality: 'highestaudio' }), { volume });
+    const dispatcher = connection?.play(ytdl(playlist[0], { quality: 'highestaudio', filter: 'audioonly' }), { volume });
 
-    const songInfo = await ytdl.getInfo(playlist[0]);
+    const { videoDetails } = await ytdl.getBasicInfo(playlist[0]);
 
     const embed = new MessageEmbed();
 
     embed.setColor('#ffd596');
-    embed.setTitle(`Tocando agora ${songInfo.videoDetails.title}`);
+    embed.setTitle('Tocando agora');
+    embed.addField(videoDetails.title, videoDetails.author.name);
 
     this.message.channel.send(embed);
   
@@ -50,6 +51,7 @@ class MusicController {
 
     embed.setColor('#ffd596');
     embed.setTitle('Que pena, a festa acabou.');
+    embed.addField('Se quiser começar novamente, basta usar o comando', 'jiro.play <music>');
 
     return this.message.channel.send(embed);
   }

@@ -1,7 +1,7 @@
 import { Message, MessageEmbed } from 'discord.js';
 import ytdl from 'ytdl-core';
-import { playlist } from '../controllers/MusicController';
 import { ICommandsProps } from '../DTO/CommandsDTO';
+import { addToPlaylist } from '../utils/AddToPlaylist';
 import { seachVideos } from '../utils/YoutubeUtils';
 
 const config = require('../../config.json');
@@ -34,32 +34,15 @@ export const play = async ({ message, args, music }: ICommandsProps) => {
 
     const collector = message.channel.createMessageCollector(filter, { max: 1, time: 60000 });
 
-    collector.on('collect', async (reply: Message) => {
+    collector.on('collect', (reply: Message) => {
       const songIndex = Number(reply.content) - 1;
 
-      ytdl.validateID(videos[songIndex].video_id);
-  
       url = `https://youtube.com/watch?v=${videos[songIndex].video_id}`;
 
-      playlist.push(url);
-
-      const embed = new MessageEmbed();
-
-      embed.setColor('#ffd596');
-      embed.setTitle(`${videos[songIndex].title} Adicionada a playlist!`);
-
-      message.channel.send(embed);
-
-      if(playlist.length <= 1) {
-        return music.play();
-      }
+      addToPlaylist(url, message, music);
     });
   }else {
-    playlist.push(url);
-  
-    if(playlist.length <= 1) {
-      await music.play();
-    }
+    addToPlaylist(url, message, music);
   }
 };
 
