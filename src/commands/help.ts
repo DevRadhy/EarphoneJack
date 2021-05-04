@@ -20,8 +20,8 @@ export const help = async ({ client, message }: ICommandsProps) => {
     const files = fs.readdirSync(__dirname);
     files.map((file) => {
         const module = require(`./${file}`);
-        const { name, description, alias } = module.details;
-        embed.addField(`${name.toUpperCase()} (${alias})`, description);
+        const { name, description } = module.details;
+        embed.addField(`${name.toUpperCase()}`, description);
     });
 
     embed.setFooter(`Requested by ${message.author.tag}`, String(message.author.avatarURL()));
