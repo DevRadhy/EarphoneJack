@@ -3,7 +3,7 @@ import ytdl from 'ytdl-core';
 import { playlist } from "../controllers/MusicController";
 import { ICommandsProps } from "../DTO/CommandsDTO";
 
-export = async ({ message }: ICommandsProps) => {
+export const list = async ({ message }: ICommandsProps) => {
   const embed = new MessageEmbed();
 
   embed.setColor('#ffd596');
@@ -21,10 +21,8 @@ export = async ({ message }: ICommandsProps) => {
   return message.channel.send(embed);
 };
 
-/**
- * {
- *  name: 'list',
- *  description: 'Mostra as músicas na fila.',
- *  alias: [ 'playlist', 'queue' ]
- * }
- */
+export const details = {
+  name: 'list',
+  description: 'Mostra as músicas na fila.',
+  alias: [ 'playlist', 'queue' ],
+};

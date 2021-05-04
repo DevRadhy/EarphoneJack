@@ -11,8 +11,8 @@ const commandsPath = path.join(__dirname, 'commands');
 fs.readdir(commandsPath, (err, file) => {
   file.map((file) => {
     const module = require(`./commands/${file}`);
-    const command = file.split('.')[0];
-    commands[command] = module;
+    const command = module.details.name;
+    commands[command] = module[command];
   });
 });
 
