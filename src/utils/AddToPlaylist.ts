@@ -1,11 +1,15 @@
 import { Message, MessageEmbed } from "discord.js";
-import { MusicController, playlist } from "../controllers/MusicController";
+import { MusicController, queue } from "../controllers/MusicController";
 import { getSongInfo } from "./SongInfo";
 
-export async function addToPlaylist(url: string, message: Message, music: MusicController) {
-  playlist.push(url);
+export async function addToPlaylist(video_id: string, message: Message, music: MusicController) {
+  const song = await getSongInfo(video_id);
 
-  const song = await getSongInfo(url);
+  queue.push({
+    video_id,
+    title: song.title,
+    author: song.author,
+  });
 
   const embed = new MessageEmbed();
 
@@ -14,7 +18,7 @@ export async function addToPlaylist(url: string, message: Message, music: MusicC
 
   message.channel.send(embed);
 
-  if(playlist.length <= 1) {
+  if(queue.length <= 1) {
     return music.play();
   }
 }
