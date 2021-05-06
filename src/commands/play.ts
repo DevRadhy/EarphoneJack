@@ -1,7 +1,9 @@
 import { Message, MessageEmbed } from 'discord.js';
 import ytdl from 'ytdl-core';
+import { PlaylistRepository } from '../database/PlaylistRepository';
 import { ICommandsProps } from '../DTO/CommandsDTO';
 import { addToPlaylist } from '../utils/AddToPlaylist';
+import { getVideoId } from '../utils/GetVideoId';
 import { seachVideos } from '../utils/YoutubeUtils';
 
 const config = require('../../config.json');
@@ -9,7 +11,25 @@ const config = require('../../config.json');
 export const play = async ({ message, args, music }: ICommandsProps) => {
   let url = args[0];
 
-  if(!ytdl.validateURL(args[0])) {
+  if(args[0] === 'playlist') {
+    const playlistRepository = new PlaylistRepository();
+
+    await playlistRepository.get(args[1]);
+
+    const embed = new MessageEmbed();
+
+    embed.setColor('#ffd596');
+    embed.setTitle(`Playlist`);
+    embed.setDescription(`Playlist ${args[1]} adicionada a fila`);
+    embed.setFooter(`Requested by ${message.author.tag}`, String(message.author.avatarURL()));
+    embed.setTimestamp();
+
+    message.channel.send(embed);
+
+    return music.play();
+  }
+  
+  if(!ytdl.validateURL(url)) {
     const argsQuery = message.content.slice(config.prefix.length).trim();
 
     const videos = await seachVideos(argsQuery);
@@ -37,12 +57,16 @@ export const play = async ({ message, args, music }: ICommandsProps) => {
     collector.on('collect', (reply: Message) => {
       const songIndex = Number(reply.content) - 1;
 
-      url = `https://youtube.com/watch?v=${videos[songIndex].video_id}`;
+      url = videos[songIndex].video_id;
 
       addToPlaylist(url, message, music);
     });
   }else {
-    addToPlaylist(url, message, music);
+    const video_id = getVideoId(url);
+
+    if(!video_id) return message.reply('Desculpe, você precisa fornecer uma URL válida');
+    
+    addToPlaylist(video_id, message, music);
   }
 };
 

@@ -1,10 +1,10 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreatePlaylist1620086054846 implements MigrationInterface {
+export class CreateSongs1620171366267 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(new Table({
-      name: 'playlist',
+      name: 'songs',
       columns: [
         {
           name: 'id',
@@ -14,19 +14,35 @@ export class CreatePlaylist1620086054846 implements MigrationInterface {
           generationStrategy: 'increment',
         },
         {
+          name: 'playlist_id',
+          type: 'varchar',
+        },
+        {
+          name: 'video_id',
+          type: 'varchar',
+        },
+        {
           name: 'name',
           type: 'varchar',
         },
         {
-          name: 'guild_id',
+          name: 'author',
           type: 'varchar',
-        },
+        }
+      ],
+      foreignKeys: [
+        {
+          columnNames: [ 'playlist_id' ],
+          referencedColumnNames: [ 'id' ],
+          referencedTableName: 'playlist',
+          onDelete: 'CASCADE',
+        }
       ]
     }));
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('playlist');
+    await queryRunner.dropTable('songs');
   }
 
 }
