@@ -2,11 +2,11 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('playlist')
 export class Playlist {
-  @PrimaryGeneratedColumn('increment')
-  name: string;
+  @PrimaryGeneratedColumn()
+  readonly id?: string;
 
   @Column()
-  video_id: string;
+  name: string;
 
   @Column()
   guild_id: string;
