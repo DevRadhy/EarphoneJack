@@ -1,13 +1,13 @@
 import { ICommandsProps } from "../DTO/CommandsDTO";
 
 export const volume = async ({ message, args, music }: ICommandsProps) => {
-  if(!args[0] || args[0] > '10' || args[0] < '1') return message.reply("Desculpe, você precisa escolher um número de 1 a 10");
-  
-  const volume = Number(args[0]) / 20;
+  const volume = Number(args[0]);
 
-  await music.setVolume(volume);
+  if(!args[0] || volume < 1 || volume > 10) return message.reply("Desculpe, você precisa escolher um número de 1 a 10");
 
-  return message.channel.send(`Volume alterando para ${volume * 200}%`);
+  await music.setVolume(volume / 20);
+
+  return message.channel.send(`Volume alterando para ${volume * 10}%`);
 };
 
 export const details = {
