@@ -2,8 +2,10 @@ import { ICommandsProps } from "../DTO/CommandsDTO";
 
 const { MessageEmbed } = require("discord.js");
 
-export const skip = async ({ message, music }: ICommandsProps) => {
-  await music.skip();
+export const skip = async ({ message, args, music }: ICommandsProps) => {
+  const toMusicNumber = Number(args[0]);
+
+  await music.skip(toMusicNumber);
 
   const embed = new MessageEmbed();
 
