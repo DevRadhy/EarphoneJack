@@ -46,8 +46,13 @@ class MusicController {
     });
   }
 
-  async skip() {
+  async skip(to?: number) {
     const connection = await this.getConnection();
+
+    to && queue.splice(0, to - 2);
+
+    console.log(queue);
+
     connection?.dispatcher?.end();
   }
 
