@@ -1,8 +1,11 @@
+import 'reflect-metadata';
 import { Client } from "discord.js";
 const client = new Client();
 import path from "path";
 import fs from "fs";
 import { ICommands } from "./DTO/CommandsDTO";
+
+import './database/connection';
 
 const commands: ICommands = {};
 

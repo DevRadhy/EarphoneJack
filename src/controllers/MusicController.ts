@@ -1,7 +1,13 @@
 import { Message, MessageEmbed } from 'discord.js';
 import ytdl from 'ytdl-core';
 
-let playlist: string[] = [];
+interface QueueProps {
+  video_id: string;
+  title: string;
+  author: string;
+}
+
+let queue: QueueProps[] = [];
 let volume = 0.5;
 
 class MusicController {
@@ -20,36 +26,40 @@ class MusicController {
   async play() {
     const connection = await this.getConnection();
 
-    const dispatcher = connection?.play(ytdl(playlist[0], { quality: 'highestaudio' }), { volume });
+    const play = `https://youtube.com/watch?v=${queue[0].video_id}`;
 
-    const songInfo = await ytdl.getInfo(playlist[0]);
+    const dispatcher = connection?.play(ytdl(play, { quality: 'highestaudio', filter: 'audioonly' }), { volume });
+
+    const { title, author } = queue[0];
 
     const embed = new MessageEmbed();
 
     embed.setColor('#ffd596');
-    embed.setTitle(`Tocando agora ${songInfo.videoDetails.title}`);
+    embed.setTitle('Tocando agora');
+    embed.addField(title, author);
 
     this.message.channel.send(embed);
   
     dispatcher?.on('finish', () => {
-      playlist.shift();
-      playlist.length >= 1 ? this.play() : this.stop();
+      queue.shift();
+      queue.length >= 1 ? this.play() : this.stop();
     });
   }
 
   async skip() {
     const connection = await this.getConnection();
-    connection?.dispatcher.end();
+    connection?.dispatcher?.end();
   }
 
   async stop() {
-    playlist = [];
+    queue = [];
     this.message.member?.voice.channel?.leave();
 
     const embed = new MessageEmbed();
 
     embed.setColor('#ffd596');
     embed.setTitle('Que pena, a festa acabou.');
+    embed.addField('Se quiser começar novamente, basta usar o comando', 'jiro.play <music>');
 
     return this.message.channel.send(embed);
   }
@@ -59,8 +69,8 @@ class MusicController {
 
     volume = newVolume;
 
-    connection?.dispatcher.setVolume(newVolume);
+    connection?.dispatcher?.setVolume(newVolume);
   }
 }
 
-export { MusicController, playlist };
+export { MusicController, queue };

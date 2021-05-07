@@ -5,6 +5,9 @@ node_modules/
 package-lock.json
 yarn.lock
 
+# database
+src/database/database.sqlite
+
 # environments variables
 .env
 .evn.local
