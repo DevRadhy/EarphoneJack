@@ -5,8 +5,6 @@ const { MessageEmbed } = require("discord.js");
 export const skip = async ({ message, args, music }: ICommandsProps) => {
   const toMusicNumber = Number(args[0]);
 
-  console.log(toMusicNumber);
-
   await music.skip(toMusicNumber);
 
   const embed = new MessageEmbed();
