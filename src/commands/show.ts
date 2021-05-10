@@ -8,7 +8,7 @@ export const show = async ({ message, args }: ICommandsProps) => {
   const playlistRepository = new PlaylistRepository();
   const playlist = await playlistRepository.show(args[0]);
 
-  if(!playlist) return message.reply(`Desculpe, playlist ${args[0]} não existe.`);
+  if(!playlist) return message.reply(`Desculpe, playlist **${args[0]}** não existe.`);
 
   const embed = new MessageEmbed();
 

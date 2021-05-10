@@ -3,6 +3,8 @@ import { queue } from "../controllers/MusicController";
 import { ICommandsProps } from "../DTO/CommandsDTO";
 
 export const list = async ({ message }: ICommandsProps) => {
+  if(!queue) return message.reply('Desculpe, não há nunhuma música na fila.');
+
   const embed = new MessageEmbed();
 
   embed.setColor('#ffd596');
