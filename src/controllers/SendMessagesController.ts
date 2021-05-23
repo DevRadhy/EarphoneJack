@@ -1,5 +1,6 @@
 import { Client, EmojiIdentifierResolvable, Message } from "discord.js";
 import { Request, Response } from "express";
+import { validationResult } from 'express-validator';
 
 interface IRequest {
   serverId: string
@@ -18,6 +19,11 @@ class SendMessageController {
   }
 
   handle = async (request: Request, response: Response) => {
+
+    const errors = validationResult(request);
+    if (!errors.isEmpty()) {
+      return response.status(400).json({ errors: errors.array() });
+    }
 
     const {
       serverId,
