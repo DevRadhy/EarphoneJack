@@ -12,9 +12,7 @@ messagesRoute.post(
   "/", 
   body("serverId").isString(), 
   body("channel").isString(), 
-  body("message").isArray({
-    min: 1
-  }), 
+  body("message").notEmpty(), 
   sendMessageController.handle 
 );
 

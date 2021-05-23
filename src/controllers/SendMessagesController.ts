@@ -5,7 +5,7 @@ import { validationResult } from 'express-validator';
 interface IRequest {
   serverId: string
   channel: string
-  message: string[]
+  message: string[] | string
   reactions: EmojiIdentifierResolvable[]
 }
 
@@ -39,7 +39,7 @@ class SendMessageController {
       && channelObject.guild.id === serverId
     );
   
-    const formatMessage = message.join("\n");
+    const formatMessage = (typeof message === "string") ? message : message.join("\n");
   
     //@ts-ignore
     const messageResponse = await channelSelected.send(formatMessage) as Message;
