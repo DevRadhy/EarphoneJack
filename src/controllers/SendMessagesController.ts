@@ -39,7 +39,6 @@ class SendMessageController {
       && channelObject.guild.id === serverId
     );
   
-    const formatMessage = message.join("\n");
   
     //@ts-ignore
     const messageResponse = await channelSelected.send(formatMessage) as Message;
