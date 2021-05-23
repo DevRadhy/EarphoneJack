@@ -9,6 +9,7 @@ const listOrigins = `${process.env.URLS_ORIGINS_LIST}`.replace(/ /gm, "").split(
 app.use(express.json());
 app.use(cors());
 app.use((request: Request, response: Response, next: NextFunction) => {
+  if(!listOrigins[0]) return next();
   if(listOrigins.indexOf(request.headers.host || "") !== -1){
     return next();
   }
