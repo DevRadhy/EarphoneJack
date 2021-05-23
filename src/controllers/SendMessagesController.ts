@@ -2,6 +2,7 @@ import { Client, EmojiIdentifierResolvable, Message } from "discord.js";
 import { Request, Response } from "express";
 
 interface IRequest {
+  serverId: string
   channel: string
   message: string[]
   reactions: EmojiIdentifierResolvable[]
@@ -19,13 +20,18 @@ class SendMessageController {
   handle = async (request: Request, response: Response) => {
 
     const {
+      serverId,
       channel,
       message,
       reactions
     } = request.body as IRequest;
 
-    //@ts-ignore
-    const channelSelected = this.client.channels.cache.find(channelObject => channelObject.name === channel);
+    const channelSelected = this.client.channels.cache.find(channelObject => 
+      //@ts-ignore      
+      channelObject.name === channel  
+      //@ts-ignore
+      && channelObject.guild.id === serverId
+    );
   
     const formatMessage = message.join("\n");
   
