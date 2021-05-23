@@ -1,6 +1,9 @@
 import cors from "cors";
+import "express-async-errors";
 import express, { NextFunction, Request, Response } from "express";
+
 import { routes } from "./routes";
+import { AppError } from "../../errors/AppError";
 
 const app = express();
 
@@ -20,5 +23,21 @@ app.use((request: Request, response: Response, next: NextFunction) => {
 });
 
 app.use(routes);
+
+app.use(
+  // eslint-disable-next-line no-unused-vars
+  (err: Error, request: Request, response: Response, next: NextFunction) => {
+    if (err instanceof AppError) {
+      return response.status(err.statusCode).json({
+        message: err.message,
+      });
+    }
+
+    return response.status(400).json({
+      status: "error",
+      message: `Internal server error - ${err.message}`,
+    });
+  }
+);
 
 export { app };
