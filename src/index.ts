@@ -5,7 +5,9 @@ import path from "path";
 import fs from "fs";
 import { ICommands } from "./DTO/CommandsDTO";
 
+
 import './database/connection';
+import { server } from './shared/infra/http/server';
 
 const commands: ICommands = {};
 
@@ -29,3 +31,7 @@ client.on("message", async message => {
 });
 
 client.login(process.env.SECRET_TOKEN);
+
+export { client };
+
+server();

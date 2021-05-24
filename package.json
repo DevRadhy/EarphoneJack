@@ -10,8 +10,12 @@
   "dependencies": {
     "@discordjs/opus": "^0.5.0",
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-validator": "^6.11.1",
     "ffmpeg-static": "^4.3.0",
     "reflect-metadata": "^0.1.13",
     "sqlite": "^4.0.21",
@@ -22,6 +26,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.11",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.12.1",
