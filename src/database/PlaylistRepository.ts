@@ -89,4 +89,20 @@ export class PlaylistRepository {
 
     return songs;
   }
+
+  async remove(playlist_name: string, song: string) {
+    const playlist = await this.playlistRepository.findOne({
+      where: { name: playlist_name },
+    });
+
+    if(!playlist) return;
+
+    const musicAlreadyExist = await this.songsRepository.findOne({
+      where: { playlist_id: playlist.id, video_id: song },
+    });
+
+    if(!musicAlreadyExist) return;
+
+    return this.songsRepository.remove(musicAlreadyExist);
+  }
 }

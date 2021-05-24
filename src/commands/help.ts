@@ -32,6 +32,6 @@ export const help = async ({ client, message }: ICommandsProps) => {
 
 export const details = {
   name: 'help',
-  description: 'Mostra todos os comandos do BOT.',
-  alias: ['ajuda'],
+  description: 'Mostra todos os comandos do bot.',
+  alias: [ 'ajuda' ],
 };
