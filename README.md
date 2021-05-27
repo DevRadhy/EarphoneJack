@@ -44,6 +44,8 @@ O nome EarphoneJack vem de uma personagem chamada **Kyouka Jirou** do anime **Bo
 Projeto feito usando biblioteca javascript para Discord.
 
 - **Node.js**
+- **Express**
+- **Typescript**
 - **Discord.js**
 - **YouTube API v3**
 - **Axios**
@@ -78,11 +80,14 @@ SECRET_TOKEN=your_secret_token_bot_here
 
 # Chave do Youtube API v3
 YOUTUBE_KEY=your_youbube_api_key
+
+# Dominios permitidos separados por ','
+URLS_ORIGINS_LIST=
 ```
 
 após configurar essas variáveis você pode iniciar o projeto com todas as funcionalidades.
 
-### Rodando o projeto
+### Iniciando o projeto
 
 Depois de instalar as dependêcias e configurar as variáveis de ambiente, basta usar o seguinte comando para iniciar o projeto.
 
@@ -91,10 +96,36 @@ npm run dev
 # ou yarn dev
 ```
 
-quando o bot estiver on e pronto para ser usando você verá um log no terminal com a menssagem `Ready!`.
+quando o bot estiver pronto, você verá no terminal com a menssagem, algo como:
 
-> 💡 Se você ficou interessado no projeto e quer saber mais, ou tem algo para dizer, você pode abrir uma issue.
+```bash
+Server On
+Ready!
+```
 
+## Fazendo chamandas HTTP
+
+O bot tem um funcionalidade para fazer chamadas **HTTP**, para mandar mensagens em servidores e canais especificos, adicionando reações a mensagem.
+
+Para user essa funcionalidade é só fazer uma requisição para `/sendMessages`, com o seguinte conteúdo no `body` da requisição:
+
+```json
+{
+  "serverId": "id_do_servidor",
+  "channelId": "id_do_canal",
+  "message": "mensagem_que_será_enviada",
+  "reactions": [ "emoji" ]
+}
+```
+
+- **ID do servidor:** `serverId` recebe uma `string`, com o **ID** do servidor onde a mensagem deve ser enviada.
+
+- **ID do canal:** O campo `channelId`, recebe um `string` com o **ID** do canal, onde a mesagem deve ser enviada.
+
+- **Mensagem:** `message`, pode receber dois tipos, uma `string` com a mensagem, ou uma `array` de `strings`, onde cada elemento é considerado uma linha, mas os dois formatos aceitam textos em multilinhas.
+
+ - **Tipos de Reações:** O campo de `reactions` recebe um `string` e pode receber emojis padrões que são usados normalmente no **Discord**, mas também pode receber emojis personalizados de cada servidor, além de emojis animados.
+ 
 ## License
 
 <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/dev-house-community/EarphoneJack">EarphoneJack</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/DevRadhy">Lucas Jantsch Guedes</a> is licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-SA 4.0<img width=24 height=24 style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img width=24 height=24 style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img width=24 height=24 style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
