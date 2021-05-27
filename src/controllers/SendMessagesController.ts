@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 import { validationResult } from 'express-validator';
 
 interface IRequest {
-  serverId: string
-  channel: string
+  guildId: string
+  channelId: string
   message: string[] | string
   reactions: EmojiIdentifierResolvable[]
 }
@@ -26,17 +26,16 @@ class SendMessageController {
     }
 
     const {
-      serverId,
-      channel,
+      guildId,
+      channelId,
       message,
       reactions
     } = request.body as IRequest;
 
-    const channelSelected = this.client.channels.cache.find(channelObject => 
-      //@ts-ignore      
-      channelObject.name === channel  
+    const channelSelected = this.client.channels.cache.find(channelObject =>     
+      channelObject.id === channelId
       //@ts-ignore
-      && channelObject.guild.id === serverId
+      && channelObject.guild.id === guildId
     );
   
     const formatMessage = (typeof message === "string") ? message : message.join("\n");
