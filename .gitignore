@@ -8,6 +8,9 @@ yarn.lock
 # database
 src/database/database.sqlite
 
+# production
+dist/
+
 # environments variables
 .env
 .evn.local
