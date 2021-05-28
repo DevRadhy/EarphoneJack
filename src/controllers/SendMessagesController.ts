@@ -36,7 +36,19 @@ class SendMessageController {
     
     const guild = await this.client.guilds.cache.find(guild => guild.id === guildId);
 
+    if(!guild){
+      return response.status(401).json({
+        errors: "Guild is invalid!"
+      });
+    }
+
     const channelSelected = guild?.client.channels.cache.find(channelObject => channelObject.id === channelId );
+
+    if(!channelSelected){
+      return response.status(401).json({
+        errors: "Channel is invalid!"
+      });
+    }
 
     const userIsValid = guild?.client.users.cache.find(user => user.id === userId);
 
