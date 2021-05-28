@@ -10,8 +10,8 @@ const sendMessageController = new SendMessageController(client);
 
 messagesRoute.post( 
   "/", 
-  body("serverId").isString(), 
-  body("channel").isString(), 
+  body("guildId").isString(), 
+  body("channelId").isString(), 
   body("message").notEmpty(), 
   sendMessageController.handle 
 );
