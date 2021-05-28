@@ -47,10 +47,9 @@ class SendMessageController {
     }
 
     const user = guild?.member(userIsValid);
-
     
     //@ts-ignore
-    const roleIsValid = user?._roles[0] ? user._roles.reduce((current, next) => current || next) : false;
+    const roleIsValid = channelSelected.permissionOverwrites.some(roleChannel => user._roles.some(role => role === roleChannel.id));
     
     if(!roleIsValid){
       return response.status(401).json({
@@ -68,7 +67,9 @@ class SendMessageController {
     await Promise.all(reactionsResponse);
   
     
-    return response.send();
+    return response.status(201).json({
+      message: "Message sent successfully"
+    });
   }
 }
 
