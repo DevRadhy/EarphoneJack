@@ -111,14 +111,14 @@ Para user essa funcionalidade é só fazer uma requisição para `/sendMessages`
 
 ```json
 {
-  "serverId": "id_do_servidor",
+  "guildId": "id_do_servidor",
   "channelId": "id_do_canal",
   "message": "mensagem_que_será_enviada",
   "reactions": [ "emoji" ]
 }
 ```
 
-- **ID do servidor:** `serverId` recebe uma `string`, com o **ID** do servidor onde a mensagem deve ser enviada.
+- **ID do servidor:** `guildId` recebe uma `string`, com o **ID** do servidor onde a mensagem deve ser enviada.
 
 - **ID do canal:** O campo `channelId`, recebe um `string` com o **ID** do canal, onde a mesagem deve ser enviada.
 
