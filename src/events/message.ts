@@ -27,9 +27,9 @@ export = (client: Client, message: Message, commands: ICommands) => {
   // Pega os dados do comando do commands
   const cmd = commands[command];
 
-  // Se esse comando não existir, silenciosamente saia e não faça nada
-  if (!cmd) return;
+  // Se esse comando não existir ou não estiver habilitado, silenciosamente saia e não faça nada
+  if (!cmd || !cmd.details.enable) return;
 
   // Execute o comando
-  cmd({ client, message, args, music });
+  cmd.execute({ client, message, args, music });
 };
