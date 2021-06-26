@@ -3,6 +3,7 @@ import { api } from "../services/api";
 interface ItemProps {
   snippet: {
     title: string;
+    channelTitle: string;
   };
   id: {
     videoId: string;
@@ -23,6 +24,7 @@ export async function seachVideos(query: string) {
   return data.items.map((item: ItemProps) => (
     {
       title: item.snippet.title,
+      author: item.snippet.channelTitle,
       video_id: item.id.videoId,
     }
   ));
