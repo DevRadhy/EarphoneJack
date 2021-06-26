@@ -40,8 +40,8 @@ export const play = async ({ message, args, music }: ICommandsProps) => {
     embed.setTitle('Escolha uma música.');
     embed.setDescription('Escolha um número de 1-10');
 
-    videos.map((song: { title: string }, index: number) => {
-      embed.addField(`${index + 1}. ${song.title}`, song.title);
+    videos.map((song: { title: string, author: string }, index: number) => {
+      embed.addField(`${index + 1}. ${song.title}`, song.author);
     });
 
     embed.setFooter(`Requested by ${message.author.tag}`, String(message.author.avatarURL()));
