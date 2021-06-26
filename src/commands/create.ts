@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { PlaylistRepository } from "../database/PlaylistRepository";
-import { ICommandsProps } from "../DTO/CommandsDTO";
+import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 import { Playlist } from "../models/Playlist";
 import { getVideoId } from "../utils/GetVideoId";
 import { getSongInfo } from "../utils/SongInfo";
@@ -36,8 +36,9 @@ export const create = async ({ message, args }: ICommandsProps) => {
   return message.channel.send(embed);
 };
 
-export const details = {
+export const details: ICommandsDetails = {
   name: 'create',
   description: 'Cria uma playlist.',
   alias: [ 'criar', 'add', 'adicionar' ],
+  enable: true,
 };

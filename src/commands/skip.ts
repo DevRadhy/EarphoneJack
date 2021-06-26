@@ -1,4 +1,4 @@
-import { ICommandsProps } from "../DTO/CommandsDTO";
+import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 
 const { MessageEmbed } = require("discord.js");
 
@@ -15,8 +15,9 @@ export const skip = async ({ message, args, music }: ICommandsProps) => {
   return message.channel.send(embed);
 };
 
-export const details = {
+export const details: ICommandsDetails = {
   name: 'skip',
   description: 'Pula para a proxima música',
   alias: [ 'pular', 'proxima' ],
+  enable: true,
 };

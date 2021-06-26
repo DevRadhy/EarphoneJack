@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { PlaylistRepository } from "../database/PlaylistRepository";
-import { ICommandsProps } from "../DTO/CommandsDTO";
+import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 
 export const show = async ({ message, args }: ICommandsProps) => {
   if(!args[0]) return message.reply('Desculpe, você precisa fornecer o nome da playlist.');
@@ -25,8 +25,9 @@ export const show = async ({ message, args }: ICommandsProps) => {
   return message.channel.send(embed);
 };
 
-export const details = {
+export const details: ICommandsDetails = {
   name: 'show',
   description: 'Mostra as músicas da playlist.',
   alias: [ 'ver', 'mostrar' ],
+  enable: true,
 };

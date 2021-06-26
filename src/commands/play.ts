@@ -1,7 +1,7 @@
 import { Message, MessageEmbed } from 'discord.js';
 import ytdl from 'ytdl-core';
 import { PlaylistRepository } from '../database/PlaylistRepository';
-import { ICommandsProps } from '../DTO/CommandsDTO';
+import { ICommandsDetails, ICommandsProps } from '../DTO/CommandsDTO';
 import { addToPlaylist } from '../utils/AddToPlaylist';
 import { getVideoId } from '../utils/GetVideoId';
 import { seachVideos } from '../utils/YoutubeUtils';
@@ -70,8 +70,9 @@ export const play = async ({ message, args, music }: ICommandsProps) => {
   }
 };
 
-export const details = {
+export const details: ICommandsDetails = {
   name: 'play',
   description: 'Coloque um link ou pesquise um música, escolha uma de 1 a 10 pra ser adicionada a playlist.',
   alias: [ 'tocar' ],
+  enable: true,
 };

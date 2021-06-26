@@ -9,6 +9,16 @@ export interface ICommandsProps {
 }
 
 export interface ICommands {
-  // eslint-disable-next-line no-unused-vars
-  [command: string]: (props: ICommandsProps) => void;
+  [command: string]: {
+    details: ICommandsDetails;
+    // eslint-disable-next-line no-unused-vars
+    execute: (props: ICommandsProps) => void;
+  }
+}
+
+export interface ICommandsDetails {
+  name: string;
+  description: string;
+  alias: string[];
+  enable: boolean;
 }

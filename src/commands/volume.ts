@@ -1,4 +1,4 @@
-import { ICommandsProps } from "../DTO/CommandsDTO";
+import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 
 export const volume = async ({ message, args, music }: ICommandsProps) => {
   const volume = Number(args[0]);
@@ -10,8 +10,9 @@ export const volume = async ({ message, args, music }: ICommandsProps) => {
   return message.channel.send(`Volume alterando para ${volume * 10}%`);
 };
 
-export const details = {
+export const details: ICommandsDetails = {
   name: 'volume',
   description: 'Escolha um número de 1 a 10 pra alterar o volume.',
   alias: [ 'vol' ],
+  enable: true,
 };

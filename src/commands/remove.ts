@@ -1,6 +1,6 @@
 import { Message, MessageEmbed } from "discord.js";
 import { PlaylistRepository } from "../database/PlaylistRepository";
-import { ICommandsProps } from "../DTO/CommandsDTO";
+import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 
 export const remove = async ({ message, args }: ICommandsProps) => {
   const [ playlist ] = args;
@@ -44,8 +44,9 @@ export const remove = async ({ message, args }: ICommandsProps) => {
 
 };
 
-export const details = {
+export const details: ICommandsDetails = {
   name: 'remove',
   description: 'Escolha uma música para ser removid da playlist.',
   alias: [ 'remover' ],
+  enable: true,
 };

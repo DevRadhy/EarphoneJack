@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 import { queue } from "../controllers/MusicController";
-import { ICommandsProps } from "../DTO/CommandsDTO";
+import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 
 export const list = async ({ message }: ICommandsProps) => {
   if(!queue) return message.reply('Desculpe, não há nunhuma música na fila.');
@@ -20,8 +20,9 @@ export const list = async ({ message }: ICommandsProps) => {
   return message.channel.send(embed);
 };
 
-export const details = {
+export const details: ICommandsDetails = {
   name: 'list',
   description: 'Mostra as músicas na fila.',
   alias: [ 'playlist', 'queue' ],
+  enable: true,
 };
