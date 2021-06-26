@@ -87,6 +87,8 @@ URLS_ORIGINS_LIST=
 
 após configurar essas variáveis você pode iniciar o projeto com todas as funcionalidades.
 
+O projeto possui um floxo de controle, além do **Github**, no **[Notion.so](https://www.notion.so/EarphonJack-8f3bb0ca2a5644baafbb1f067c23088b)**
+
 ### Iniciando o projeto
 
 Depois de instalar as dependêcias e configurar as variáveis de ambiente, basta usar o seguinte comando para iniciar o projeto.
