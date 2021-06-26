@@ -1,6 +1,6 @@
 import fs from "fs";
 import { Client, MessageEmbed } from "discord.js";
-import { ICommandsProps } from "../DTO/CommandsDTO";
+import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 
 const getClientAvatarURL = (client: Client) => {
   const avatarUrl = client.user?.avatarURL();
@@ -30,8 +30,9 @@ export const help = async ({ client, message }: ICommandsProps) => {
   return message.channel.send(embed);
 };
 
-export const details = {
+export const details: ICommandsDetails = {
   name: 'help',
   description: 'Mostra todos os comandos do bot.',
   alias: [ 'ajuda' ],
+  enable: true,
 };
