@@ -1,13 +1,19 @@
 import { Message, MessageEmbed } from "discord.js";
-import { PlaylistRepository } from "../database/PlaylistRepository";
+import { queue } from "../controllers/MusicController";
+import { PlaylistController } from "../controllers/PlaylistController";
 import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 
 export const remove = async ({ message, args }: ICommandsProps) => {
-  const [ playlist ] = args;
-  if(!playlist) return message.reply('Desculpe, você precisa indicar a música  há ser removida');
+  if(!args[0]) return message.reply('Desculpe, você precisa indicar a música há ser removida');
+  
+  if(args[0] !== "playlist" && Number(args[0]) <= queue.length) {
+    const dequeue = queue.splice(Number(args[0]) - 1, 1);
 
-  const playlistRepository = new PlaylistRepository();
-  const songs = await playlistRepository.show(playlist);
+    return message.channel.send(`Música **${dequeue[0].title}** removida da lista de reprodução`);
+  }
+
+  const playlistController = new PlaylistController();
+  const songs = await playlistController.show(args[0]);
 
   if(!songs) return message.reply(`Desculpe, playlist **${args[0]}** não existe.`);
 
@@ -35,18 +41,18 @@ export const remove = async ({ message, args }: ICommandsProps) => {
 
     const song = songs.find((song, index) => index === Number(songIndex));
   
-    if(!song) return message.reply('Desculpe, você precisa fornecer um id de música válido');
+    if(!song) return message.reply('Desculpe, você precisa fornecer o número da música');
   
-    await playlistRepository.remove(playlist, song.video_id);
+    await playlistController.remove(args[0], song.video_id);
 
-    return message.channel.send(`Música **${song.name}** removida da playlist **${playlist}**.`);
+    return message.channel.send(`Música **${song.name}** removida da playlist **${args[0]}**.`);
   });
 
 };
 
 export const details: ICommandsDetails = {
   name: 'remove',
-  description: 'Escolha uma música para ser removid da playlist.',
+  description: 'Escolha uma música para ser removida de playlist passando o nome da playlist, ou passando o número da música a ser removida da lista de reprodução atual.',
   alias: [ 'remover' ],
   enable: true,
 };
