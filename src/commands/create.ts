@@ -1,12 +1,12 @@
 import { MessageEmbed } from "discord.js";
-import { PlaylistRepository } from "../database/PlaylistRepository";
+import { PlaylistController } from "../controllers/PlaylistController";
 import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 import { Playlist } from "../models/Playlist";
 import { getVideoId } from "../utils/GetVideoId";
 import { getSongInfo } from "../utils/SongInfo";
 
 export const create = async ({ message, args }: ICommandsProps) => {
-  const playlistRepository = new PlaylistRepository();
+  const playlistController = new PlaylistController();
 
   const [name, song] = args;
   const guild_id = String(message.guild?.id);
@@ -21,7 +21,7 @@ export const create = async ({ message, args }: ICommandsProps) => {
     guild_id,
   });
 
-  await playlistRepository.create(playlist, {
+  await playlistController.create(playlist, {
     video_id,
     name: music.title,
     author: music.author,

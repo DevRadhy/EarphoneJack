@@ -1,13 +1,8 @@
 import { getRepository, Repository } from "typeorm";
 import { queue } from "../controllers/MusicController";
+import { SongProps } from "../DTO/MusicsDTO";
 import { Playlist } from "../models/Playlist";
 import { Song } from "../models/Song";
-
-interface SongProps {
-  name: string;
-  author: string;
-  video_id: string;
-}
 
 export class PlaylistRepository {
   private playlistRepository: Repository<Playlist>
