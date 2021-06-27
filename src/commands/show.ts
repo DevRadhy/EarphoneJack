@@ -1,12 +1,12 @@
 import { MessageEmbed } from "discord.js";
-import { PlaylistRepository } from "../database/PlaylistRepository";
+import { PlaylistController } from "../controllers/PlaylistController";
 import { ICommandsDetails, ICommandsProps } from "../DTO/CommandsDTO";
 
 export const show = async ({ message, args }: ICommandsProps) => {
   if(!args[0]) return message.reply('Desculpe, você precisa fornecer o nome da playlist.');
 
-  const playlistRepository = new PlaylistRepository();
-  const playlist = await playlistRepository.show(args[0]);
+  const playlistController = new PlaylistController();
+  const playlist = await playlistController.show(args[0]);
 
   if(!playlist) return message.reply(`Desculpe, playlist **${args[0]}** não existe.`);
 

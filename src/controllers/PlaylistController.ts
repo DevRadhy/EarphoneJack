@@ -1,4 +1,6 @@
 import { PlaylistRepository } from "../database/PlaylistRepository";
+import { SongProps } from "../DTO/MusicsDTO";
+import { Playlist } from "../models/Playlist";
 
 class PlaylistController {
   playlistRepository: PlaylistRepository;
@@ -7,8 +9,8 @@ class PlaylistController {
     this.playlistRepository = new PlaylistRepository();
   }
 
-  async create(name: string, song: string) {
-    return { name, song };
+  async create(playlist: Playlist, song: SongProps) {
+    this.playlistRepository.create(playlist, song);
   }
 
   async remove(name: string, song: string) {

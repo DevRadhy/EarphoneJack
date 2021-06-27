@@ -30,7 +30,9 @@ export const play = async ({ message, args, music }: ICommandsProps) => {
   }
   
   if(!ytdl.validateURL(url)) {
-    const argsQuery = message.content.slice(config.prefix.length).trim();
+    const argsQuery = message.content.slice(config.prefix.length).replace("play", "").trim();
+
+    console.log(argsQuery);
 
     const videos = await seachVideos(argsQuery);
 
